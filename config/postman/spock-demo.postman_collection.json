@@ -1,0 +1,33 @@
+{
+	"info": {
+		"_postman_id": "8d5c20e3-3025-47b3-ad82-7be158489843",
+		"name": "Spock Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Buscar jogos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/search?query=metal gear",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "metal gear"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

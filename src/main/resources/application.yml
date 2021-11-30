@@ -1,0 +1,11 @@
+# Use "--spring.profiles.active=local" para escolher um perfil
+server:
+  port: 8080
+
+spring:
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+
+api:
+  key: ${GIANT_BOMB_API_KEY}
