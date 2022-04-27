@@ -1,4 +1,3 @@
-# Use "--spring.profiles.active=local" para escolher um perfil
 server:
   port: 8080
 
