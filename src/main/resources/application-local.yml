@@ -1,0 +1,3 @@
+api:
+  key: "invisible-key"
+  host: "http://localhost:8888"

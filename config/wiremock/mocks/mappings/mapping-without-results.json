@@ -1,0 +1,27 @@
+{
+  "request": {
+    "urlPath": "/search",
+    "method": "GET",
+    "queryParameters": {
+      "format": {
+        "equalTo": "json"
+      },
+      "resources": {
+        "equalTo": "game"
+      },
+      "query": {
+        "doesNotMatch": "^starfox$"
+      },
+      "api_key": {
+        "matches": ".*"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "body-without-results.json",
+    "headers": {
+      "Content-Type": "application/json;charset=UTF-8"
+    }
+  }
+}

@@ -8,3 +8,4 @@ spring:
 
 api:
   key: ${GIANT_BOMB_API_KEY}
+  host: "https://www.giantbomb.com/api"
