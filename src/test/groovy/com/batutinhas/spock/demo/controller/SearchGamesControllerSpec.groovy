@@ -22,7 +22,7 @@ class SearchGamesControllerSpec extends Specification {
         String query = "Starfox"
 
         and: "Resposta válida da API"
-        def game = GameFixture.getMock()
+        def game = GameFixture.getOneValid()
         1 * searchGamesUseCase.execute(query) >> [game]
 
         when: "Invocar searchGames"

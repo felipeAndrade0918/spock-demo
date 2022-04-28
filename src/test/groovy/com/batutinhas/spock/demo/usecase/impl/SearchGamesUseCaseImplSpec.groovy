@@ -30,7 +30,7 @@ class SearchGamesUseCaseImplSpec extends Specification {
         1 * searchGamesGateway.searchGames(query) >> searchResponse
 
         and: "O mapeamento do retorno da API para uma lista de Game"
-        def game = GameFixture.getMock()
+        def game = GameFixture.getOneValid()
         1 * gameMapper.mapSearchResponse(searchResponse) >> [game]
 
         when: "Invocar execute"

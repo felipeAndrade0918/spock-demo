@@ -4,7 +4,7 @@ import com.batutinhas.spock.demo.domain.Game
 
 class GameFixture {
 
-    static Game getMock() {
+    static Game getOneValid() {
         return Game.builder()
                 .name("Starfox")
                 .description("Um jogo bacana")
