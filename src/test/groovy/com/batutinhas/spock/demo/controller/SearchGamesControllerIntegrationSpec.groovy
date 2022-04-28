@@ -25,11 +25,11 @@ class SearchGamesControllerIntegrationSpec extends Specification {
     @Autowired
     MockMvc mockMvc;
 
-    def "O endpoint principal deve retornar uma lista de Game baseado no nome de um jogo"() {
+    def "O endpoint principal deve retornar uma lista de jogos baseado no nome de um jogo"() {
         given: "O nome de um jogo"
         String query = "Starfox"
 
-        and: "Resposta válida da API"
+        and: "Uma resposta válida da API"
         def searchResponse = SearchResponseFixture.getOneValid()
         1 * searchGamesGateway.searchGames(query) >> searchResponse
 
@@ -52,5 +52,28 @@ class SearchGamesControllerIntegrationSpec extends Specification {
             coverImage == "url da imagem"
             originalReleaseDate == "1997-04-27"
         }
+    }
+
+    def "O endpoint principal deve retornar uma lista vazia de jogos caso não encontre resultados"() {
+        given: "O nome de um jogo que não existe"
+        String query = "Coxicas do Espaço - O Resgate"
+
+        and: "Uma resposta vazia da API"
+        def emptySearchResponse = SearchResponseFixture.getOneEmpty()
+        1 * searchGamesGateway.searchGames(query) >> emptySearchResponse
+
+        when: "Invocar o endpoint"
+        def mvcResult = mockMvc.perform(
+                MockMvcRequestBuilders.get("/search")
+                        .queryParam("query", query))
+                .andReturn()
+
+        then: "Deve responder com status 200"
+        mvcResult.getResponse().status == 200
+
+        and: "Retornar uma lista vazia de jogos"
+        def contentAsString = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8)
+        List<Game> games = new ObjectMapper().readValue(contentAsString, new TypeReference<List<Game>>(){})
+        games.isEmpty()
     }
 }
