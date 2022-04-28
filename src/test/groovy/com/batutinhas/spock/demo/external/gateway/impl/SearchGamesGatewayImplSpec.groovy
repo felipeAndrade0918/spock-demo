@@ -27,7 +27,7 @@ class SearchGamesGatewayImplSpec extends Specification {
         when: "Invocar searchGames"
         def searchResponse = searchGamesGateway.searchGames(query)
 
-        then: "Deve retornar uma resposta da API com a lista de jogos"
+        then: "Deve retornar a resposta da API com a lista de jogos"
         searchResponse
         searchResponse.results.size() == 1
 
@@ -38,5 +38,20 @@ class SearchGamesGatewayImplSpec extends Specification {
             image
             image.originalUrl == "url da imagem"
         }
+    }
+
+    def "Caso não haja resultados na API, deve-se retornar um SearchResponse vazio"() {
+        given: "Um nome de um jogo que não existe"
+        String query = "A Noite Oficial dos Pastéis"
+
+        and: "Uma chamada sem resultados da API"
+        1 * giantBombClient.searchGames(query) >> SearchResponseFixture.getOneEmpty()
+
+        when: "Invocar searchGames"
+        def searchResponse = searchGamesGateway.searchGames(query)
+
+        then: "Deve retornar a resposta vazia da API"
+        searchResponse
+        searchResponse.results.isEmpty()
     }
 }
