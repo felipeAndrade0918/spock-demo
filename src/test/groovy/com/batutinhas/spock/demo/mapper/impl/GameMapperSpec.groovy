@@ -1,10 +1,11 @@
-package com.batutinhas.spock.demo.mapper
+package com.batutinhas.spock.demo.mapper.impl
 
 import com.batutinhas.spock.demo.domain.Game
 import com.batutinhas.spock.demo.external.dto.GameImageResponse
 import com.batutinhas.spock.demo.external.dto.GameResponse
 import com.batutinhas.spock.demo.external.dto.SearchResponse
 import com.batutinhas.spock.demo.fixture.SearchResponseFixture
+import com.batutinhas.spock.demo.mapper.GameMapper
 import com.batutinhas.spock.demo.mapper.impl.GameMapperImpl
 import spock.lang.Specification
 
