@@ -53,6 +53,7 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Dependência principal do Groovy, necessária para usar o Spock -->
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
@@ -60,6 +61,7 @@
 			<type>pom</type>
 		</dependency>
 
+		<!-- Dependência principal do Spock -->
 		<dependency>
 			<groupId>org.spockframework</groupId>
 			<artifactId>spock-core</artifactId>
@@ -67,6 +69,7 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Dependência do Spock para mockar beans do Spring utilizando @SpringBean -->
 		<dependency>
 			<groupId>org.spockframework</groupId>
 			<artifactId>spock-spring</artifactId>
