@@ -22,7 +22,7 @@ class SearchGamesGatewayImplSpec extends Specification {
         String query = "Starfox"
 
         and: "Uma chamada válida para a API"
-        1 * giantBombClient.searchGames(query) >> SearchResponseFixture.getMock()
+        1 * giantBombClient.searchGames(query) >> SearchResponseFixture.getOneValid()
 
         when: "Invocar searchGames"
         def searchResponse = searchGamesGateway.searchGames(query)

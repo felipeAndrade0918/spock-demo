@@ -6,7 +6,7 @@ import com.batutinhas.spock.demo.external.dto.SearchResponse
 
 class SearchResponseFixture {
 
-    static SearchResponse getMock() {
+    static SearchResponse getOneValid() {
         def gameResponse = GameResponse.builder()
                 .name("Starfox")
                 .deck("Um jogo bacana")
@@ -16,5 +16,9 @@ class SearchResponseFixture {
                         .build())
                 .build()
         return SearchResponse.builder().results([gameResponse]).build()
+    }
+
+    static SearchResponse getOneEmpty() {
+        return SearchResponse.builder().results([]).build()
     }
 }

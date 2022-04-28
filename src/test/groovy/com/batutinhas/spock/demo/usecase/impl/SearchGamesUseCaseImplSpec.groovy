@@ -26,7 +26,7 @@ class SearchGamesUseCaseImplSpec extends Specification {
         String query = "Starfox"
 
         and: "Uma resposta válida da API"
-        def searchResponse = SearchResponseFixture.getMock()
+        def searchResponse = SearchResponseFixture.getOneValid()
         1 * searchGamesGateway.searchGames(query) >> searchResponse
 
         and: "O mapeamento do retorno da API para uma lista de Game"

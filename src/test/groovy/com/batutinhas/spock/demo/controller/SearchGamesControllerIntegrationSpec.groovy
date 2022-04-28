@@ -30,7 +30,7 @@ class SearchGamesControllerIntegrationSpec extends Specification {
         String query = "Starfox"
 
         and: "Resposta válida da API"
-        def searchResponse = SearchResponseFixture.getMock()
+        def searchResponse = SearchResponseFixture.getOneValid()
         1 * searchGamesGateway.searchGames(query) >> searchResponse
 
         when: "Invocar o endpoint"
