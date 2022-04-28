@@ -4,9 +4,11 @@ import com.batutinhas.spock.demo.external.client.GiantBombClient
 import com.batutinhas.spock.demo.external.gateway.SearchGamesGateway
 import com.batutinhas.spock.demo.fixture.SearchResponseFixture
 import spock.lang.Specification
+import spock.lang.Subject
 
 class SearchGamesGatewayImplSpec extends Specification {
 
+    @Subject
     SearchGamesGateway searchGamesGateway
 
     GiantBombClient giantBombClient = Mock()
@@ -19,7 +21,7 @@ class SearchGamesGatewayImplSpec extends Specification {
         given: "Um nome de um jogo"
         String query = "Starfox"
 
-        and: "Uma chamada válida a API"
+        and: "Uma chamada válida para a API"
         1 * giantBombClient.searchGames(query) >> SearchResponseFixture.getMock()
 
         when: "Invocar searchGames"
@@ -28,6 +30,7 @@ class SearchGamesGatewayImplSpec extends Specification {
         then: "Deve retornar uma resposta da API com a lista de jogos"
         searchResponse
         searchResponse.results.size() == 1
+
         verifyAll(searchResponse.results[0]) {
             name == "Starfox"
             deck == "Um jogo bacana"

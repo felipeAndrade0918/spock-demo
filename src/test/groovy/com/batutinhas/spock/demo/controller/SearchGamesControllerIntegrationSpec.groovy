@@ -1,8 +1,8 @@
 package com.batutinhas.spock.demo.controller
 
 import com.batutinhas.spock.demo.domain.Game
-import com.batutinhas.spock.demo.fixture.GameFixture
-import com.batutinhas.spock.demo.usecase.SearchGamesUseCase
+import com.batutinhas.spock.demo.external.gateway.SearchGamesGateway
+import com.batutinhas.spock.demo.fixture.SearchResponseFixture
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.spockframework.spring.SpringBean
@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets
 class SearchGamesControllerIntegrationSpec extends Specification {
 
     @SpringBean
-    SearchGamesUseCase searchGamesUseCase = Mock()
+    private SearchGamesGateway searchGamesGateway = Mock()
 
     @Autowired
     MockMvc mockMvc;
@@ -30,19 +30,27 @@ class SearchGamesControllerIntegrationSpec extends Specification {
         String query = "Starfox"
 
         and: "Resposta válida da API"
-        def game = GameFixture.getMock()
-        1 * searchGamesUseCase.execute(query) >> [game]
+        def searchResponse = SearchResponseFixture.getMock()
+        1 * searchGamesGateway.searchGames(query) >> searchResponse
 
-        when: "Invocar searchGames"
+        when: "Invocar o endpoint"
         def mvcResult = mockMvc.perform(
                 MockMvcRequestBuilders.get("/search")
                         .queryParam("query", query))
                 .andReturn()
 
-        then: "Deve trazer uma lista de Game"
+        then: "Deve responder com status 200"
         mvcResult.getResponse().status == 200
+
+        and: "Retornar uma lista de jogos"
         def contentAsString = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8)
-        List<Game> content = new ObjectMapper().readValue(contentAsString, new TypeReference<List<Game>>(){})
-        content == [game]
+        List<Game> games = new ObjectMapper().readValue(contentAsString, new TypeReference<List<Game>>(){})
+        games.size() == 1
+        verifyAll(games[0]) {
+            name == "Starfox"
+            description == "Um jogo bacana"
+            coverImage == "url da imagem"
+            originalReleaseDate == "1997-04-27"
+        }
     }
 }

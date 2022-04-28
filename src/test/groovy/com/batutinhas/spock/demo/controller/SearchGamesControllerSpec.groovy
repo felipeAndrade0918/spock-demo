@@ -1,13 +1,14 @@
 package com.batutinhas.spock.demo.controller
 
-import com.batutinhas.spock.demo.domain.Game
+
 import com.batutinhas.spock.demo.fixture.GameFixture
-import com.batutinhas.spock.demo.fixture.SearchResponseFixture
 import com.batutinhas.spock.demo.usecase.SearchGamesUseCase
 import spock.lang.Specification
+import spock.lang.Subject
 
 class SearchGamesControllerSpec extends Specification {
 
+    @Subject
     SearchGamesController searchGamesController
 
     SearchGamesUseCase searchGamesUseCase = Mock()
@@ -28,8 +29,12 @@ class SearchGamesControllerSpec extends Specification {
         def games = searchGamesController.searchGames(query)
 
         then: "Deve trazer uma lista de Game"
-        games
         games.size() == 1
-        games[0] == game
+        verifyAll(games[0]) {
+            name == "Starfox"
+            description == "Um jogo bacana"
+            coverImage == "url da imagem"
+            originalReleaseDate == "1997-04-27"
+        }
     }
 }
