@@ -4,9 +4,11 @@ package com.batutinhas.spock.demo.mapper.impl
 import com.batutinhas.spock.demo.fixture.SearchResponseFixture
 import com.batutinhas.spock.demo.mapper.GameMapper
 import spock.lang.Specification
+import spock.lang.Subject
 
 class GameMapperImplSpec extends Specification {
 
+    @Subject
     GameMapper gameMapper
 
     def setup() {
