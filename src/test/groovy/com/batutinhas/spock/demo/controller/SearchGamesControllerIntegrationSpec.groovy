@@ -23,7 +23,7 @@ class SearchGamesControllerIntegrationSpec extends Specification {
     private SearchGamesGateway searchGamesGateway = Mock()
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc
 
     def "O endpoint principal deve retornar uma lista de jogos baseado no nome de um jogo"() {
         given: "O nome de um jogo"
