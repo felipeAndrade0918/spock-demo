@@ -1,29 +1,27 @@
 package com.batutinhas.spock.demo.mapper.impl
 
-
 import com.batutinhas.spock.demo.fixture.SearchResponseFixture
 import com.batutinhas.spock.demo.mapper.GameMapper
 import spock.lang.Specification
-import spock.lang.Subject
 
-class GameMapperImplSpec extends Specification {
+class GameMapperImplSpock extends Specification {
 
-    @Subject
-    GameMapper gameMapper
+    private GameMapper gameMapper
 
     def setup() {
         gameMapper = new GameMapperImpl()
     }
 
-    def "O retorno da Giant Bomb API deve ser transformado em uma lista de Game"() {
-        given: "Um SearchResponse da API"
+    def "Deve transformar o retorno da API em uma lista de Game"() {
+        given: "Um SearchResponse"
         def searchResponse = SearchResponseFixture.getOneValid()
 
         when: "Invocar mapSearchResponse"
         def games = gameMapper.mapSearchResponse(searchResponse)
 
-        then: "Deve transformar os resultados em uma lista de Game"
+        then: "Deve transformar o retorno da API em uma lista de Game"
         games.size() == 1
+
         verifyAll(games[0]) {
             name == "Starfox"
             description == "Um jogo bacana"
@@ -32,14 +30,14 @@ class GameMapperImplSpec extends Specification {
         }
     }
 
-    def "Um retorno vazio da Giant Bomb API deve retornar também uma lista vazia de Game"() {
-        given: "Um SearchResponse vazia da API"
+    def "Caso o retorno da API seja vazio, deve retornar uma lista vazia de Game"() {
+        given: "Um SearchResponse sem resultados"
         def emptySearchResponse = SearchResponseFixture.getOneEmpty()
 
         when: "Invocar mapSearchResponse"
         def games = gameMapper.mapSearchResponse(emptySearchResponse)
 
-        then: "Deve transformar também uma lista vazia de Game"
+        then: "Deve retornar uma lista vazia de Game"
         games.isEmpty()
     }
 }
