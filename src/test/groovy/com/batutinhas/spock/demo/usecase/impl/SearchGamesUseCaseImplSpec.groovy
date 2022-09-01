@@ -12,10 +12,10 @@ import spock.lang.Subject
 class SearchGamesUseCaseImplSpec extends Specification {
 
     @Subject
-    SearchGamesUseCase searchGamesUseCase
+    private SearchGamesUseCase searchGamesUseCase
 
-    SearchGamesGateway searchGamesGateway = Mock()
-    GameMapper gameMapper = Mock()
+    private SearchGamesGateway searchGamesGateway = Mock()
+    private GameMapper gameMapper = Mock()
 
     def setup() {
         searchGamesUseCase = new SearchGamesUseCaseImpl(searchGamesGateway, gameMapper);
