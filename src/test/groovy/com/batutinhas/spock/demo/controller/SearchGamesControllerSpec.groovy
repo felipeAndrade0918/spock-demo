@@ -9,9 +9,9 @@ import spock.lang.Subject
 class SearchGamesControllerSpec extends Specification {
 
     @Subject
-    SearchGamesController searchGamesController
+    private SearchGamesController searchGamesController
 
-    SearchGamesUseCase searchGamesUseCase = Mock()
+    private SearchGamesUseCase searchGamesUseCase = Mock()
 
     def setup() {
         searchGamesController = new SearchGamesController(searchGamesUseCase)
