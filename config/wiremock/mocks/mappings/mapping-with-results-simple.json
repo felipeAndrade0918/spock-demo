@@ -10,7 +10,7 @@
         "equalTo": "game"
       },
       "query": {
-        "equalTo": "Coxicas do Espaço - O Resgate"
+        "equalTo": "Star Fox 64"
       },
       "api_key": {
         "matches": ".*"
@@ -19,7 +19,7 @@
   },
   "response": {
     "status": 200,
-    "bodyFileName": "body-without-results.json",
+    "bodyFileName": "body-with-results-simple.json",
     "headers": {
       "Content-Type": "application/json;charset=UTF-8"
     }
