@@ -21,6 +21,7 @@ public class GameMapperImpl implements GameMapper {
                                 .coverImage(result.getImage().getOriginalUrl())
                                 .originalReleaseDate(result.getOriginalReleaseDate())
                                 .build())
+                .sorted()
                 .collect(Collectors.toList());
     }
 }
