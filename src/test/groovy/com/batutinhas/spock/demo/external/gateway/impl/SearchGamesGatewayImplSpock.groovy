@@ -9,8 +9,6 @@ class SearchGamesGatewayImplSpock extends Specification {
 
     private SearchGamesGateway searchGamesGateway
 
-//    stub = substitue o comportamento
-//    mock = verificador da chamada
     private GiantBombClient giantBombClient = Mock()
 
     def setup() {
