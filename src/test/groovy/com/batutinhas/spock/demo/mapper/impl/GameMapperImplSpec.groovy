@@ -4,7 +4,7 @@ import com.batutinhas.spock.demo.fixture.SearchResponseFixture
 import com.batutinhas.spock.demo.mapper.GameMapper
 import spock.lang.Specification
 
-class GameMapperImplSpock extends Specification {
+class GameMapperImplSpec extends Specification {
 
     private GameMapper gameMapper
 
@@ -17,12 +17,12 @@ class GameMapperImplSpock extends Specification {
         def searchResponse = SearchResponseFixture.getOneValid()
 
         when: "Invocar mapSearchResponse"
-        def games = gameMapper.mapSearchResponse(searchResponse)
+        def gameSearch = gameMapper.mapSearchResponse(searchResponse)
 
         then: "Deve transformar o retorno da API em uma lista de Game"
-        games.size() == 1
+        gameSearch.games.size() == 1
 
-        verifyAll(games[0]) {
+        verifyAll(gameSearch.games[0]) {
             name == "Starfox"
             description == "Um jogo bacana"
             coverImage == "url da imagem"
@@ -35,9 +35,9 @@ class GameMapperImplSpock extends Specification {
         def emptySearchResponse = SearchResponseFixture.getOneEmpty()
 
         when: "Invocar mapSearchResponse"
-        def games = gameMapper.mapSearchResponse(emptySearchResponse)
+        def gameSearch = gameMapper.mapSearchResponse(emptySearchResponse)
 
         then: "Deve retornar uma lista vazia de Game"
-        games.isEmpty()
+        gameSearch.games.isEmpty()
     }
 }

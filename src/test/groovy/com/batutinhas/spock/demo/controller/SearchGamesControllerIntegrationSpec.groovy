@@ -1,9 +1,8 @@
 package com.batutinhas.spock.demo.controller
 
-import com.batutinhas.spock.demo.domain.Game
+
 import com.batutinhas.spock.demo.external.gateway.SearchGamesGateway
 import com.batutinhas.spock.demo.fixture.SearchResponseFixture
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,6 +24,8 @@ class SearchGamesControllerIntegrationSpec extends Specification {
     @Autowired
     private MockMvc mockMvc
 
+    private ObjectMapper objectMapper = new ObjectMapper()
+
     def "O endpoint principal deve retornar uma lista de jogos baseado no nome de um jogo"() {
         given: "O nome de um jogo"
         String query = "Starfox"
@@ -44,13 +45,14 @@ class SearchGamesControllerIntegrationSpec extends Specification {
 
         and: "Retornar uma lista de jogos"
         def contentAsString = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8)
-        List<Game> games = new ObjectMapper().readValue(contentAsString, new TypeReference<List<Game>>(){})
-        games.size() == 1
-        verifyAll(games[0]) {
-            name == "Starfox"
-            description == "Um jogo bacana"
-            coverImage == "url da imagem"
-            originalReleaseDate == "1997-04-27"
+        def jsonNode = objectMapper.readTree(contentAsString)
+
+        jsonNode.get("games").size() == 1
+        verifyAll(jsonNode.get("games")[0]) {
+            it.get("name").asText() == "Starfox"
+            it.get("description").asText() == "Um jogo bacana"
+            it.get("coverImage").asText() == "url da imagem"
+            it.get("originalReleaseDate").asText() == "1997-04-27"
         }
     }
 
@@ -73,7 +75,7 @@ class SearchGamesControllerIntegrationSpec extends Specification {
 
         and: "Retornar uma lista vazia de jogos"
         def contentAsString = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8)
-        List<Game> games = new ObjectMapper().readValue(contentAsString, new TypeReference<List<Game>>(){})
-        games.isEmpty()
+        def jsonNode = objectMapper.readTree(contentAsString)
+        jsonNode.get("games").isEmpty()
     }
 }

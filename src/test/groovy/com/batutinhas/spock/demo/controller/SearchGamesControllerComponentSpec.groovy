@@ -2,6 +2,7 @@ package com.batutinhas.spock.demo.controller
 
 import com.batutinhas.spock.demo.domain.Game
 import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.tomakehurst.wiremock.WireMockServer
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,6 +30,8 @@ class SearchGamesControllerComponentSpec extends Specification {
     @Autowired
     private MockMvc mockMvc
 
+    private ObjectMapper objectMapper = new ObjectMapper()
+
     def setupSpec() {
         wireMock.start()
     }
@@ -52,13 +55,13 @@ class SearchGamesControllerComponentSpec extends Specification {
 
         and: "Retornar uma lista de jogos"
         def contentAsString = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8)
-        List<Game> games = new ObjectMapper().readValue(contentAsString, new TypeReference<List<Game>>(){})
-        games.size() == 1
-        verifyAll(games[0]) {
-            name == "Star Fox 64"
-            description == "Return to the cockpit of the Arwing fighter craft and save the Lylat system from conquest in this re-telling of the original Star Fox."
-            coverImage == "https://www.giantbomb.com/a/uploads/original/8/82063/2836282-sf64.jpg"
-            originalReleaseDate == "1997-04-27"
+        def jsonNode = objectMapper.readTree(contentAsString)
+        jsonNode.get("games").size() == 1
+        verifyAll(jsonNode.get("games")[0]) {
+            it.get("name").asText() == "Star Fox 64"
+            it.get("description").asText() == "Return to the cockpit of the Arwing fighter craft and save the Lylat system from conquest in this re-telling of the original Star Fox."
+            it.get("coverImage").asText() == "https://www.giantbomb.com/a/uploads/original/8/82063/2836282-sf64.jpg"
+            it.get("originalReleaseDate").asText() == "1997-04-27"
         }
     }
 
@@ -77,7 +80,7 @@ class SearchGamesControllerComponentSpec extends Specification {
 
         and: "Retornar uma lista vazia de jogos"
         def contentAsString = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8)
-        List<Game> games = new ObjectMapper().readValue(contentAsString, new TypeReference<List<Game>>(){})
-        games.isEmpty()
+        def jsonNode = objectMapper.readTree(contentAsString)
+        jsonNode.get("games").isEmpty()
     }
 }

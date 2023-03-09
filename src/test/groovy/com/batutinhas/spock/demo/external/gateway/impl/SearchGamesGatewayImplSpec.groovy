@@ -5,7 +5,7 @@ import com.batutinhas.spock.demo.external.gateway.SearchGamesGateway
 import com.batutinhas.spock.demo.fixture.SearchResponseFixture
 import spock.lang.Specification
 
-class SearchGamesGatewayImplSpock extends Specification {
+class SearchGamesGatewayImplSpec extends Specification {
 
     private SearchGamesGateway searchGamesGateway
 

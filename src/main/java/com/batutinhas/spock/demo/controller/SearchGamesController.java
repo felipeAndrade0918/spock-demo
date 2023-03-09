@@ -1,6 +1,7 @@
 package com.batutinhas.spock.demo.controller;
 
 import com.batutinhas.spock.demo.domain.Game;
+import com.batutinhas.spock.demo.domain.GameSearch;
 import com.batutinhas.spock.demo.usecase.SearchGamesUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ public class SearchGamesController {
     private final SearchGamesUseCase searchGamesUseCase;
 
     @GetMapping("/search")
-    public List<Game> searchGames(@RequestParam String query) {
+    public GameSearch searchGames(@RequestParam String query) {
         return searchGamesUseCase.execute(query);
     }
 }

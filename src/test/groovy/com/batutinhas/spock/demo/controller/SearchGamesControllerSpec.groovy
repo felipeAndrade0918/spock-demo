@@ -1,7 +1,7 @@
 package com.batutinhas.spock.demo.controller
 
 
-import com.batutinhas.spock.demo.fixture.GameFixture
+import com.batutinhas.spock.demo.fixture.GameSearchFixture
 import com.batutinhas.spock.demo.usecase.SearchGamesUseCase
 import spock.lang.Specification
 import spock.lang.Subject
@@ -22,15 +22,15 @@ class SearchGamesControllerSpec extends Specification {
         String query = "Starfox"
 
         and: "Resposta válida da API"
-        def game = GameFixture.getOneValid()
-        1 * searchGamesUseCase.execute(query) >> [game]
+        def gameSearchFixture = GameSearchFixture.getOne()
+        1 * searchGamesUseCase.execute(query) >> gameSearchFixture
 
         when: "Invocar searchGames"
-        def games = searchGamesController.searchGames(query)
+        def gameSearch = searchGamesController.searchGames(query)
 
         then: "Deve trazer uma lista de Game"
-        games.size() == 1
-        verifyAll(games[0]) {
+        gameSearch.games.size() == 1
+        verifyAll(gameSearch.games[0]) {
             name == "Starfox"
             description == "Um jogo bacana"
             coverImage == "url da imagem"
