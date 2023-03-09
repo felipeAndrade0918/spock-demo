@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "2983776c-6ef5-4172-97b5-76a3e033ed18",
+		"_postman_id": "28a30f56-58d7-4a4d-a65c-75a2e4e18687",
 		"name": "Spock Demo",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15136860"
 	},
 	"item": [
 		{
@@ -95,7 +96,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8888/search?format=json&resources=game&api_key=qwqwe&query=coxicas",
+					"raw": "localhost:8888/search?format=json&resources=game&api_key=qwqwe&query=Coxicas do Espaço - O Resgate",
 					"host": [
 						"localhost"
 					],
@@ -118,7 +119,7 @@
 						},
 						{
 							"key": "query",
-							"value": "coxicas"
+							"value": "Coxicas do Espaço - O Resgate"
 						}
 					]
 				}
