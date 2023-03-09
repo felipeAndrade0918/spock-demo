@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.tomakehurst.wiremock.WireMockServer
+import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -16,6 +17,9 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 import java.nio.charset.StandardCharsets
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneOffset
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,6 +33,9 @@ class SearchGamesControllerComponentSpec extends Specification {
 
     @Autowired
     private MockMvc mockMvc
+
+    @SpringBean
+    private Clock clock = Clock.fixed(Instant.parse("1996-01-20T08:30:00.00Z"), ZoneOffset.UTC)
 
     private ObjectMapper objectMapper = new ObjectMapper()
 
@@ -63,6 +70,7 @@ class SearchGamesControllerComponentSpec extends Specification {
             it.get("coverImage").asText() == "https://www.giantbomb.com/a/uploads/original/8/82063/2836282-sf64.jpg"
             it.get("originalReleaseDate").asText() == "1997-04-27"
         }
+        jsonNode.get("requestDateTime").asText() == "20-01-1996 08:30:00"
     }
 
     def "O endpoint principal deve retornar uma lista vazia de jogos caso não encontre resultados"() {

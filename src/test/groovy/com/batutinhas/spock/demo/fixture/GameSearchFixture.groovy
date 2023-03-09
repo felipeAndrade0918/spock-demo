@@ -8,7 +8,7 @@ class GameSearchFixture {
     static GameSearch getOne() {
         return GameSearch.builder()
                 .games([GameFixture.getOneValid()])
-                .requestDateTime("")
+                .requestDateTime("20-01-1996 08:30:00")
                 .build()
     }
 }

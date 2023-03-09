@@ -13,6 +13,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import spock.lang.Specification
 
 import java.nio.charset.StandardCharsets
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneOffset
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -23,6 +26,9 @@ class SearchGamesControllerIntegrationSpec extends Specification {
 
     @Autowired
     private MockMvc mockMvc
+
+    @SpringBean
+    private Clock clock = Clock.fixed(Instant.parse("1996-01-20T08:30:00.00Z"), ZoneOffset.UTC)
 
     private ObjectMapper objectMapper = new ObjectMapper()
 
@@ -54,6 +60,7 @@ class SearchGamesControllerIntegrationSpec extends Specification {
             it.get("coverImage").asText() == "url da imagem"
             it.get("originalReleaseDate").asText() == "1997-04-27"
         }
+        jsonNode.get("requestDateTime").asText() == "20-01-1996 08:30:00"
     }
 
     def "O endpoint principal deve retornar uma lista vazia de jogos caso não encontre resultados"() {

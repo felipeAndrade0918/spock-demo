@@ -36,5 +36,6 @@ class SearchGamesControllerSpec extends Specification {
             coverImage == "url da imagem"
             originalReleaseDate == "1997-04-27"
         }
+        gameSearch.requestDateTime == "20-01-1996 08:30:00"
     }
 }
