@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class GameMapperImpl implements GameMapper {
 
-    private static final String REQUEST_DATE_TIME_PATTERN = "dd-MM-YYYY HH:mm:ss";
+    private static final String REQUEST_DATE_TIME_PATTERN = "dd-MM-yyyy HH:mm:ss";
 
     private final Clock clock;
 
