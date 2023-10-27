@@ -65,5 +65,36 @@ class SearchGamesControllerIntegrationTest {
         Assertions.assertEquals("Um jogo bacana", gameNode.get("description").asText());
         Assertions.assertEquals("url da imagem", gameNode.get("coverImage").asText());
         Assertions.assertEquals("1997-04-27", gameNode.get("originalReleaseDate").asText());
+
+        Mockito.verify(giantBombClient, Mockito.times(1)).searchGames(query);
+    }
+
+    @Test
+    @DisplayName("O endpoint principal deve retornar uma lista vazia de jogos caso não encontre resultados")
+    void shouldReturnAnEmptyListWhenNoResultsAreAvailable() throws Exception {
+        // given
+        String query = "Coxicas do Espaço - O Resgate";
+
+        // Uma resposta válida da API
+        SearchResponse emptySearchResponse = SearchResponseTemplate.getOneEmpty();
+        Mockito.when(giantBombClient.searchGames(query)).thenReturn(emptySearchResponse);
+
+        // when
+        MvcResult mvcResult = mockMvc.perform(
+                        MockMvcRequestBuilders.get("/search")
+                                .queryParam("query", query))
+                .andReturn();
+
+        // then
+        Assertions.assertEquals(200, mvcResult.getResponse().getStatus());
+
+        String contentAsString = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        JsonNode jsonNode = OBJECT_MAPPER.readTree(contentAsString);
+        Assertions.assertEquals("20-01-1996 08:30:00", jsonNode.get("requestDateTime").asText());
+
+        JsonNode gamesNode = jsonNode.get("games");
+        Assertions.assertTrue(gamesNode.isEmpty());
+
+        Mockito.verify(giantBombClient, Mockito.times(1)).searchGames(query);
     }
 }
