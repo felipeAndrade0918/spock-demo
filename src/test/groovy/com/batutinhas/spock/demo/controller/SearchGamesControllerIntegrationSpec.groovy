@@ -1,7 +1,6 @@
 package com.batutinhas.spock.demo.controller
 
-
-import com.batutinhas.spock.demo.external.gateway.SearchGamesGateway
+import com.batutinhas.spock.demo.external.client.GiantBombClient
 import com.batutinhas.spock.demo.fixture.SearchResponseFixture
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.spockframework.spring.SpringBean
@@ -22,7 +21,7 @@ import java.time.ZoneOffset
 class SearchGamesControllerIntegrationSpec extends Specification {
 
     @SpringBean
-    private SearchGamesGateway searchGamesGateway = Mock()
+    private GiantBombClient giantBombClient = Mock()
 
     @Autowired
     private MockMvc mockMvc
@@ -38,7 +37,7 @@ class SearchGamesControllerIntegrationSpec extends Specification {
 
         and: "Uma resposta válida da API"
         def searchResponse = SearchResponseFixture.getOneValid()
-        1 * searchGamesGateway.searchGames(query) >> searchResponse
+        1 * giantBombClient.searchGames(query) >> searchResponse
 
         when: "Invocar o endpoint"
         def mvcResult = mockMvc.perform(
@@ -69,7 +68,7 @@ class SearchGamesControllerIntegrationSpec extends Specification {
 
         and: "Uma resposta vazia da API"
         def emptySearchResponse = SearchResponseFixture.getOneEmpty()
-        1 * searchGamesGateway.searchGames(query) >> emptySearchResponse
+        1 * giantBombClient.searchGames(query) >> emptySearchResponse
 
         when: "Invocar o endpoint"
         def mvcResult = mockMvc.perform(
