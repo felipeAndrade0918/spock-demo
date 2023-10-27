@@ -1,14 +1,11 @@
 package com.batutinhas.spock.demo.controller;
 
-import com.batutinhas.spock.demo.domain.Game;
 import com.batutinhas.spock.demo.domain.GameSearch;
 import com.batutinhas.spock.demo.usecase.SearchGamesUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
